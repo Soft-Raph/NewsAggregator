@@ -54,7 +54,7 @@ class FetchArticlesJob implements ShouldQueue
                 'source' => 'newsapi',
                 'description' => $article['description'],
                 'url' => $article['url'],
-                'published_at' => $article['publishedAt'],
+                'published_at' => date('Y-m-d H:i:s', strtotime($article['publishedAt'])),
                 'category' => null,
             ];
         })->toArray();
@@ -72,7 +72,7 @@ class FetchArticlesJob implements ShouldQueue
                 'source' => 'guardian',
                 'description' => null,
                 'url' => $article['webUrl'],
-                'published_at' => $article['webPublicationDate'],
+                'published_at' => date('Y-m-d H:i:s', strtotime($article['webPublicationDate'])),
                 'category' => null,
             ];
         })->toArray();
@@ -90,7 +90,7 @@ class FetchArticlesJob implements ShouldQueue
                 'source' => 'nytimes',
                 'description' => $article['abstract'],
                 'url' => $article['url'],
-                'published_at' => $article['published_date'],
+                'published_at' => date('Y-m-d H:i:s', strtotime($article['published_date'])),
                 'category' => $article['section'],
             ];
         })->toArray();
