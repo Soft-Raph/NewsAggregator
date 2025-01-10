@@ -2,13 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
     public function index(Request $request)
     {
+        $validate = [
+            'search' => 'nullable|string|max:255',
+            'category' => 'nullable|string|max:255',
+            'source' => 'nullable|string|max:255',
+            'date' => 'nullable|date',
+        ];
+
+        $validator = Validator::make($request->all(), $validate);
+
+        if ($validator->fails()) {
+            return ResponseHelper::error(
+                422,
+                $validator->messages()->first()
+            );
+        }
         $query = Article::query();
 
         if ($request->filled('search')) {
@@ -27,6 +44,6 @@ class ArticleController extends Controller
             $query->whereDate('published_at', $request->date);
         }
 
-        return response()->json($query->paginate(10));
+        return ResponseHelper::success($query->paginate(10), 'Article fetched successfully');
     }
 }
