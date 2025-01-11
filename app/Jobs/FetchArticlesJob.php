@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class FetchArticlesJob implements ShouldQueue
 {
@@ -27,17 +28,23 @@ class FetchArticlesJob implements ShouldQueue
         $sources = config('news_apis');
 
         foreach ($sources as $source => $config) {
-            $response = Http::get($config['url']);
+            try {
+                $response = Http::get($config['url']);
 
-            if ($response->ok()) {
-                $articles = $this->{$config['transform']}($response->json());
+                if ($response->ok()) {
+                    $articles = $this->{$config['transform']}($response->json());
 
-                foreach ($articles as $article) {
-                    Article::updateOrCreate(
-                        ['url' => $article['url']],
-                        $article
-                    );
+                    foreach ($articles as $article) {
+                        Article::updateOrCreate(
+                            ['url' => $article['url']],
+                            $article
+                        );
+                    }
+                } else {
+                    Log::error("Failed to fetch articles from {$source}. Response status: " . $response->status());
                 }
+            } catch (\Exception $e) {
+                Log::error("Error fetching articles from {$source}: " . $e->getMessage());
             }
         }
     }
