@@ -8,7 +8,6 @@ Welcome to the **News Aggregator**! This is a platform designed to fetch, proces
 - **Automatic Updates**: News articles are fetched and stored regularly (every minute).
 - **Article Storage**: Articles are stored in a database with relevant metadata.
 - **Search & Filter**: Search for articles based on keywords and filter by source, date or category.
-- **Optional UI**: A clean and responsive interface to display aggregated news articles (can be added based on your requirements).
 
 ## Installation
 
@@ -25,6 +24,9 @@ Ensure you have the following installed:
 
 **Command**: Schedule and run the `php artisan articles:fetch` command to store news to your database base on the news API you integrated
 
+
+![img.png](img.png)
+
 Clone the repository to your local machine:
 
 ```bash
@@ -32,5 +34,3 @@ git clone https://github.com/yourusername/news-aggregator.git
 cd news-aggregator
 composer install
 php artisan migrate
-
-
