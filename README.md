@@ -22,9 +22,13 @@ Ensure you have the following installed:
 - **News API keys** (depending on which news APIs you integrate with)
 
 
-**Command**: Run the `php artisan articles:fetch` command to store news to your database base on the news API you integrated
+**Command**: Use the `php artisan articles:fetch` command to fetch and store news articles from the integrated news APIs into the database.
 
-- **There are three News Api integrated and you can always add more easily**
+### How It Works
+1. The command triggers a queued job called `FetchArticlesJob`.
+2. The job iterates through the configured news API integrations and retrieves their latest articles.
+3. Articles are then stored in the database, ensuring no duplicate entries.
+4. There are three News Api integrated and you can always add more easily
 
 These are the .env variable to supply their respective keys 
 - **NEWSAPI_KEY=**
