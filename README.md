@@ -22,8 +22,14 @@ Ensure you have the following installed:
 - **News API keys** (depending on which news APIs you integrate with)
 
 
-**Command**: Schedule and run the `php artisan articles:fetch` command to store news to your database base on the news API you integrated
+**Command**: Run the `php artisan articles:fetch` command to store news to your database base on the news API you integrated
 
+- **There are three News Api integrated and you can always add more easily**
+
+These are the .env variable to supply their respective keys 
+- **NEWSAPI_KEY=**
+- **GUARDIAN_API_KEY=**
+- **NYTIMES_API_KEY=**
 
 ![img.png](img.png)
 
