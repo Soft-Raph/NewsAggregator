@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Resources\FetchArticlesResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -44,6 +45,6 @@ class ArticleController extends Controller
             $query->whereDate('published_at', $request->date);
         }
 
-        return ResponseHelper::success($query->paginate(10), 'Article fetched successfully');
+        return ResponseHelper::success(FetchArticlesResource::collection($query->paginate(10)), 'Article fetched successfully');
     }
 }
